@@ -22,7 +22,8 @@ function saveData(evt) {
 
 const savedData = JSON.parse(localStorage.getItem(LS_KEY));
 
- if (savedData) {
+if (savedData) {
+    console.log(savedData);
      const { email, message } = savedData;
      emailInput.value = email;
      messageTextarea.value = message;
@@ -30,6 +31,7 @@ const savedData = JSON.parse(localStorage.getItem(LS_KEY));
 
 function clearData(evt) {
     evt.preventDefault();
+    const savedData = JSON.parse(localStorage.getItem(LS_KEY));
     console.log(savedData);
     localStorage.removeItem(LS_KEY);
     form.reset();
