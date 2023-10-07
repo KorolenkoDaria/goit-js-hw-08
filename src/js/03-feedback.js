@@ -5,7 +5,7 @@ const emailInput = document.querySelector('input');
 const messageTextarea = document.querySelector('textarea');
 
 const LS_KEY = 'feedback-form-state';
-const formData = {
+let formData = {
     email: '',
     message: '',
 };
@@ -20,19 +20,30 @@ function saveData(evt) {
     localStorage.setItem(LS_KEY, JSON.stringify(formData));
 };
 
-const savedData = JSON.parse(localStorage.getItem(LS_KEY));
+const savedData = localStorage.getItem(LS_KEY);
 
-if (savedData) {
-    console.log(savedData);
-     const { email, message } = savedData;
-     emailInput.value = email;
-     messageTextarea.value = message;
-};
+function loadForm() {
+    try {
+        if (savedData) {
+            formData = JSON.parse(savedData);
+            Object.entries(formData).forEach(([key, value]) => {
+                form.elements[key].value = value;
+            });  
+        }
+    } catch ({ message }) {
+            console.log(message);
+        }
+    }
+
+
+loadForm();
 
 function clearData(evt) {
-    evt.preventDefault();
-    const savedData = JSON.parse(localStorage.getItem(LS_KEY));
-    console.log(savedData);
+    evt.preventDefault();  
+    console.log(formData);
+    formData = {};
     localStorage.removeItem(LS_KEY);
-    form.reset();
+    evt.target.reset();
 };
+
+
